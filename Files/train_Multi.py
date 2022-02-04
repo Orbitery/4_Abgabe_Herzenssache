@@ -61,8 +61,8 @@ for idx, ecg_lead in enumerate(ecg_leads):
         print(f"{line_count} Dateien wurden verarbeitet.")
     
     if line_count == 100:    #Für Testzwecke kann hier mit weniger Daten gearbeitet werden.
-        break
-        #pass
+        #break
+        pass
 
 
 
