@@ -2,7 +2,7 @@
 
 import csv
 import os
-
+import time
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.io as sio
@@ -96,7 +96,7 @@ data_augmentation = tf.keras.Sequential([
 ])
 
 
-
+start = time.perf_counter()
 np.array(X_train[0]).shape
 #Definieren der CNN Architektur. Hierbei wurde sich bei der Architektur an dem Paper "ECG Heartbeat Classification Using Convolutional Neural Networks" von Xu und Liu, 2020 orientiert. 
 callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
@@ -122,7 +122,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 
-history = model.fit(X_train, y_train, epochs=10, batch_size=512,validation_data=(X_test, y_test), callbacks=[callback])
+history = model.fit(X_train, y_train, epochs=20, batch_size=512,validation_data=(X_test, y_test), callbacks=[callback])
 
 score = model.evaluate(X_test, y_test)
 print("Accuracy Score: "+str(round(score[1],4)))
@@ -157,4 +157,8 @@ plt.legend(['train', 'val'], loc='upper left')
 plt.savefig('./CNN_multi/loss_val_bin.png')
 plt.savefig('./CNN_multi/loss_val_bin.pdf')
 plt.close()
+
+end = time.perf_counter()
+perf = end-start
+print(f"Time in min: {perf/60:0.2f}")
 
