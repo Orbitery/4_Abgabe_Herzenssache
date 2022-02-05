@@ -47,8 +47,8 @@ r_peaks_list = []
 
 line_count = 0
 for idx, ecg_lead in enumerate(ecg_leads):
-    ecg_lead = BP_Filter(ecg_lead)
-    ecg_lead = Scaler(ecg_lead)
+    #ecg_lead = BP_Filter(ecg_lead)
+    #ecg_lead = Scaler(ecg_lead)
     ecg_lead = ecg_lead.astype('float')  # Wandel der Daten von Int in Float32 Format für CNN später
     r_peaks = detectors.hamilton_detector(ecg_lead)     # Detektion der QRS-Komplexe
     for r_peak in r_peaks:
@@ -122,7 +122,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 
-history = model.fit(X_train, y_train, epochs=20, batch_size=512,validation_data=(X_test, y_test), callbacks=[callback])
+history = model.fit(X_train, y_train, epochs=15, batch_size=1024,validation_data=(X_test, y_test), callbacks=[callback])
 
 score = model.evaluate(X_test, y_test)
 print("Accuracy Score: "+str(round(score[1],4)))
